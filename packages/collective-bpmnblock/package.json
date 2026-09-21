@@ -1,0 +1,58 @@
+{
+  "name": "collective-bpmnblock",
+  "version": "1.0.0",
+  "description": "BPMN diagram block for Plone Aurora with token simulation support",
+  "main": "index.ts",
+  "license": "MIT",
+  "keywords": [
+    "aurora-addon",
+    "volto-addon",
+    "plone",
+    "bpmn",
+    "bpmn-js",
+    "token-simulation",
+    "react"
+  ],
+  "author": "Plone Community",
+  "homepage": "https://github.com/collective/collective-bpmnblock#readme",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:collective/collective-bpmnblock.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "test": "vitest run",
+    "i18n": "rm -rf build/messages && NODE_ENV=production i18n --addon",
+    "dry-release": "release-it --dry-run",
+    "release": "release-it",
+    "release-major-alpha": "release-it major --preRelease=alpha",
+    "release-alpha": "release-it --preRelease=alpha"
+  },
+  "dependencies": {
+    "@plone/components": "workspace:*",
+    "bpmn-js": "^18.28.0",
+    "bpmn-js-token-simulation": "^0.40.0",
+    "react-router": "catalog:"
+  },
+  "peerDependencies": {
+    "i18next": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@plone/registry": "workspace:*",
+    "@plone/scripts": "workspace:*",
+    "@plone/types": "workspace:*",
+    "@storybook/addon-docs": "^10.6.0",
+    "@storybook/addon-links": "^10.6.0",
+    "@storybook/react-vite": "^10.6.0",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "release-it": "^19.0.5",
+    "storybook": "^10.6.0",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

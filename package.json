@@ -1,0 +1,50 @@
+{
+  "name": "collective-bpmnblock-dev",
+  "version": "1.0.0",
+  "description": "Plone Aurora add-on: collective-bpmnblock",
+  "author": "Plone Community",
+  "homepage": "https://github.com/collective/collective-bpmnblock",
+  "license": "MIT",
+  "keywords": [
+    "aurora-addon",
+    "volto-addon",
+    "plone",
+    "bpmn",
+    "react"
+  ],
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "dev": "REGISTRYCONFIG=$(pwd)/registry.config.ts pnpm --filter @plone/aurora dev",
+    "start": "REGISTRYCONFIG=$(pwd)/registry.config.ts pnpm --filter @plone/aurora dev",
+    "start:prod": "pnpm --filter @plone/aurora start:prod",
+    "build": "REGISTRYCONFIG=$(pwd)/registry.config.ts pnpm --filter @plone/aurora build",
+    "build:deps": "pnpm --filter @plone/registry --filter @plone/components build",
+    "i18n": "pnpm --filter collective-bpmnblock i18n",
+    "test": "pnpm --filter collective-bpmnblock exec vitest run --passWithNoTests",
+    "lint": "REGISTRYCONFIG=$(pwd)/registry.config.ts eslint --max-warnings=0 'packages/**/*.{js,jsx,ts,tsx}'",
+    "lint:fix": "REGISTRYCONFIG=$(pwd)/registry.config.ts eslint --fix 'packages/**/*.{js,jsx,ts,tsx}'",
+    "prettier": "prettier --check 'packages/**/*.{js,jsx,ts,tsx}'",
+    "prettier:fix": "prettier --write 'packages/**/*.{js,jsx,ts,tsx}' ",
+    "stylelint": "stylelint 'packages/**/*.{css,scss,less}' --allow-empty-input",
+    "stylelint:fix": "stylelint 'packages/**/*.{css,scss,less}' --fix --allow-empty-input",
+    "dry-release": "pnpm --filter collective-bpmnblock dry-release",
+    "release": "pnpm --filter collective-bpmnblock release",
+    "release-major-alpha": "pnpm --filter collective-bpmnblock release-major-alpha",
+    "release-alpha": "pnpm --filter collective-bpmnblock release-alpha",
+    "storybook": "storybook dev -p 6006",
+    "storybook-build": "storybook build -o .storybook-build"
+  },
+  "dependencies": {
+    "@plone/registry": "workspace:*",
+    "@plone/aurora": "workspace:*",
+    "collective-bpmnblock": "workspace:*"
+  },
+  "devDependencies": {
+    "@storybook/addon-docs": "^10.6.0",
+    "@storybook/addon-links": "^10.6.0",
+    "@storybook/react-vite": "^10.6.0",
+    "mrs-developer": "^2.2.0",
+    "storybook": "^10.6.0"
+  },
+  "packageManager": "pnpm@11.20.0"
+}

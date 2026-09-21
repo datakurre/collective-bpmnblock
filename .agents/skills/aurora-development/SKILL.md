@@ -74,16 +74,22 @@ They are legacy reference packages unless the task explicitly targets them.
 
 Use the configuration and add-on registries rather than forking Aurora. An
 add-on normally exposes a root `index.ts` through its `package.json` `main`
-entry:
+entry. Keep the root entrypoint as a small installer and organize feature
+registration under `config/`:
 
 ```ts
 import type { ConfigType } from '@plone/registry';
+import installBlocks from './config/blocks';
 
 export default function loadConfig(config: ConfigType) {
-  config.blocks.blocksConfig.myBlock = myBlockConfig;
+  installBlocks(config);
   return config;
 }
 ```
+
+For example, `config/blocks.ts`, `config/routes.ts`, `config/slots.ts`, and
+`config/server.ts` should each install one concern. Preserve the configuration
+loader order because later loaders can extend or replace earlier registrations.
 
 Add-ons can register or customize:
 
@@ -92,6 +98,47 @@ Add-ons can register or customize:
 - Toolbar actions, icons, styles, and themes.
 - Client configuration and optional server-only configuration in `config/server.ts`.
 - Vite configuration through the documented extension mechanism.
+
+### Blocks
+
+Keep each custom block self-contained in its own directory with a block config,
+view, schema, and edit component when editing needs custom behavior. Register
+the block from `config/blocks.ts` using its stable `id`; use lazy-loaded view
+and edit components for application bundles.
+
+- Treat `data` in a block view as the block's stored payload, not the current
+  page or backend context.
+- Define editable fields in `schema.ts` under `fieldsets` and `properties`,
+  including defaults for new blocks. Keep a runtime fallback in the view for
+  older blocks that predate a field.
+- When a block needs the current page context, read the root route loader with
+  `useRouteLoaderData('root')`. Type only the root data shape the addon uses,
+  and declare `react-router` as an explicit addon dependency.
+- Do not assume `content` is present in `BlockViewProps` at runtime. The
+  Somersault block adapter may invoke a view with only `data`.
+
+### Route modules
+
+When an application or add-on exposes a server route, use Aurora's file-based
+React Router route modules rather than adding an ad hoc API handler:
+
+- Name route files according to the route convention, for example
+  `routes/api.likes.ts` for an API endpoint.
+- Export a `loader` for reads and an `action` for writes, and type their
+  arguments with React Router's `LoaderFunctionArgs` or `ActionFunctionArgs`.
+- Read wildcard route parameters from `params['*']` and normalize them before
+  using them as keys or persistence identifiers.
+- Return explicit `Response` objects for JSON APIs, including the
+  `Content-Type: application/json` header.
+- For data needed by all routes, register a `rootLoaderData` utility from
+  `config/server.ts` and return the registry's `{ status, data }` envelope;
+  namespace the payload to avoid overwriting `content`, `site`, or other root
+  loader fields.
+- Keep database and other server-only imports inside the route module or a
+  server-only library; do not expose them through client components.
+- Use atomic persistence operations such as an upsert when a request both
+  creates and updates a record, and return the resulting record or a small
+  typed payload.
 
 Register the add-on through the project's documented `addons` configuration or
 `package.json`. Configuration loaders run in registration order; preserve

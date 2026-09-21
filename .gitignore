@@ -1,6 +1,12 @@
-!.vscode
+.*project
+.settings/
+.vscode
+*~
+.storybook-build
+build
+core
 node_modules
-/core
+yarn.lock
 /public
-*.mo
-.devenv/
+.devenv
+.pnpm-store
