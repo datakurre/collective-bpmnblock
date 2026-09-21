@@ -1,0 +1,25 @@
+[repository]
+name = "project-title"
+changelog = "CHANGELOG.md"
+version = "version.txt"
+version_format = "calver"
+container_images_prefix = "ghcr.io/collective/project-title"
+compose = ["docker-compose.yml"]
+
+[repository.towncrier]
+section = "Project"
+settings = "towncrier.toml"
+
+[backend.package]
+name = "project.title"
+path = "backend"
+code_path = "src/project/title"
+changelog = "backend/CHANGELOG.md"
+towncrier_settings = "backend/pyproject.toml"
+base_package = "Products.CMFPlone"
+publish = false
+
+[cookieplone]
+template = "aurora_cmfplone"
+template_version = "db76a81d89db7ed23d6873e5323bdbfc63cd6197"
+generated_date = "2026-09-21 08:07:14"
