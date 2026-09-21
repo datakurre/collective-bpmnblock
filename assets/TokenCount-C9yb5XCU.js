@@ -1,0 +1,10 @@
+import{n as e,r as t}from"./rolldown-runtime-DkW27tQK.js";import{i as n,l as r,t as i}from"./dist-CE12o5TX.js";import{i as a,o,r as s}from"./ModelUtil-DX6IxnK-.js";import{p as c,r as l,u}from"./EventHelper-BnHyL9BC.js";var d=t({default:()=>f});function f(e,t,r,a,o){this._overlays=t,this._scopeFilter=a,this._simulator=r,this._simulationStyles=o,this.overlayIds={},e.on(l,h,e=>{let{element:t}=e;this.removeTokenCounts(t),this.addTokenCounts(t)}),e.on(u,e=>{let r=i(`.bts-token-count[data-scope-id]`,t._overlayRoot);for(let e of r){let t=e.dataset.scopeId;n(e).toggle(`inactive`,!this._scopeFilter.isShown(t))}})}var p,m,h,g,_;function v(){return(v=e((()=>{r(),s(),c(),p=10,m=-15,h=500,g=`--token-simulation-green-base-44`,_=`--token-simulation-white`,f.prototype.addTokenCounts=function(e){if(a(e,`bpmn:MessageFlow`)||a(e,`bpmn:SequenceFlow`))return;let t=this._simulator.findScopes(t=>!t.destroyed&&t.children.some(t=>!t.destroyed&&t.element===e));this.addTokenCount(e,t)},f.prototype.addTokenCount=function(e,t){if(!t.length)return;let n=t.map(t=>this._getTokenHTML(e,t)).join(``),r=o(`
+    <div class="bts-token-count-parent">
+      ${n}
+    </div>
+  `),i={bottom:p,left:m},a=this._overlays.add(e,`bts-token-count`,{position:i,html:r,show:{minZoom:.5}});this.overlayIds[e.id]=a},f.prototype.removeTokenCounts=function(e){this.removeTokenCount(e)},f.prototype.removeTokenCount=function(e){let t=this.overlayIds[e.id];t&&(this._overlays.remove(t),delete this.overlayIds[e.id])},f.prototype._getTokenHTML=function(e,t){let n=t.colors||this._getDefaultColors();return`
+    <div data-scope-id="${t.id}" class="bts-token-count waiting ${this._scopeFilter.isShown(t)?``:`inactive`}"
+         style="color: ${n.auxiliary}; background: ${n.primary}">
+      ${t.getTokensByElement(e)}
+    </div>
+  `},f.prototype._getDefaultColors=function(){return{primary:this._simulationStyles.get(g),auxiliary:this._simuationStyles.get(_)}},f.$inject=[`eventBus`,`overlays`,`simulator`,`scopeFilter`,`simulationStyles`]})))()}export{d as n,v as r,f as t};
